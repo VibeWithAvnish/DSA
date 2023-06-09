@@ -1,0 +1,109 @@
+/*Avnish Kshirsagar
+Roll no: SIB02*/
+
+#include <iostream>
+using namespace std;
+
+class graph{
+       int node;
+       int tree[20][20];
+    public:
+      void getdata();
+      void prim();
+      graph()
+        {
+     for(int i=0; i<20; i++){
+    for(int j=0; j<20; j++){
+           tree[i][j] = 0;
+        }
+       }
+      }
+};
+
+void graph::getdata(){
+    int source, destination, weight, edges;
+     cout<<"\nEnter the Total Number of Vertices : ";
+     cin>>node;
+     cout<<"\nEnter the Total Number of Edges : ";
+      cin>>edges;
+     for(int i=0; i<edges; i++){
+        cout<<"\nEnter the Source : ";
+        cin>>source;
+        cout<<"\nEnter the Destination : ";
+        cin>>destination;
+        cout<<"\nEnter the Weight between Source and Destination : ";
+        cin>>weight;
+         tree[source][destination] = weight;
+         tree[destination][source] = weight;
+     }
+ }
+ 
+ 
+void graph::prim(){
+	
+     int select[20], i, j, k;
+     int min_dist, src, dest, Total_wt = 0;
+     
+  for(i=0; i<node; i++){
+     select[i] = 0;
+   }
+      cout<<"\nThe Minimal Spaning Tree is : \n";
+      select[0] = 1;
+     for(k=1; k<node; k++)
+    {
+    min_dist = 99999;
+     for(i=0; i<node; i++){
+    for(j=0; j<node; j++){
+  if((tree[i][j] != 0) && (select[i] != select[j])){
+   if(tree[i][j] < min_dist)
+    {
+       min_dist = tree[i][j];
+       src = i;
+       dest = j;
+       }
+     }
+    }
+} 
+
+      cout<<"\nEdge ("<<src<<","<<dest<<") and Weight = "<<min_dist;
+       select[src] = select[dest] = 1;
+       Total_wt = Total_wt + min_dist;
+    }
+    cout<<"\nTotal Path Weight is : "<<Total_wt;
+ }
+ 
+ 
+int main()
+{
+    graph obj;
+    obj.getdata();
+    obj.prim();
+     return 0;
+}
+
+/*
+OUTPUT :
+Enter the Destination : 4
+Enter the Weight between Source and Destination : 7
+Enter the Source : 4
+Enter the Destination : 0
+Enter the Weight between Source and Destination : 6
+Enter the Source : 1
+Enter the Destination : 4
+Enter the Weight between Source and Destination : 8
+Enter the Source : 1
+Enter the Destination : 3
+Enter the Weight between Source and Destination : 10
+Enter the Source : 2
+Enter the Destination : 4
+Enter the Weight between Source and Destination : 9
+The Minimal Spaning Tree is :
+Edge (0,1) and Weight = 1
+Edge (1,2) and Weight = 2
+Edge (2,3) and Weight = 3
+Edge (0,4) and Weight = 6
+Total Path Weight is : 12
+--------------------------------
+Process exited after 95.74 seconds with return value 0
+Press any key to continue . . .
+*/
